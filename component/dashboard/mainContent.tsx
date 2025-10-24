@@ -123,7 +123,7 @@ function BoardColumn({
 }
 
 // Main App
-export default function KanbanBoard() {
+export default function KanbanBoard({ theme = 'light' }: { theme?: 'light' | 'dark' }) {
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: 'Design new ui presentation', project: 'Dribbble marketing', status: 'todo', progress: 7, total: 10, date: '24 Aug 2022', comments: 7, attachments: 2, assignees: ['A', 'B'] },
     { id: 2, title: 'Add more ui/ux mockups', project: 'Pinterest promotion', status: 'todo', progress: 4, total: 10, date: '25 Aug 2022', comments: 0, attachments: 0, assignees: ['C', 'D'] },
@@ -174,9 +174,9 @@ export default function KanbanBoard() {
   const doneTasks = tasks.filter(t => t.status === 'done');
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950/30 backdrop-blur-sm text-white">
+    <div className={`h-full overflow-y-auto ${theme === 'dark' ? 'bg-slate-950/30 text-white' : 'bg-white/30 text-gray-900'} backdrop-blur-sm`}>
       {/* Mobile Nav */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 bg-slate-950/90 backdrop-blur-sm border-b border-slate-800 z-50 px-4 py-3">
+      <div className={`lg:hidden fixed top-0 left-0 right-0 ${theme === 'dark' ? 'bg-slate-950/90' : 'bg-white/90'} backdrop-blur-sm border-b ${theme === 'dark' ? 'border-slate-800' : 'border-gray-200'} z-50 px-4 py-3`}>
         <div className="flex items-center justify-between">
           <button onClick={() => setShowSidebar(!showSidebar)} className="text-gray-400">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +196,7 @@ export default function KanbanBoard() {
       {showSidebar && (
         <div className="lg:hidden fixed inset-0 z-40">
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowSidebar(false)}></div>
-          <div className="absolute left-0 top-0 h-full w-64 bg-slate-950/95 border-r border-slate-800 p-6">
+          <div className={`absolute left-0 top-0 h-full w-64 ${theme === 'dark' ? 'bg-slate-950/95' : 'bg-white/95'} border-r ${theme === 'dark' ? 'border-slate-800' : 'border-gray-200'} p-6`}>
             <div className="flex justify-between mb-6">
               <h2 className="font-semibold">Menu</h2>
               <button onClick={() => setShowSidebar(false)}>
@@ -218,11 +218,11 @@ export default function KanbanBoard() {
         <div className="p-4 sm:p-6 lg:p-8">
           <div className="flex flex-col sm:flex-row justify-between mb-6 gap-4">
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold mb-1">Welcome back, Vincent 👋</h1>
-              <p className="text-gray-400 text-sm">19 May 2022</p>
+              <h1 className={`text-xl sm:text-2xl font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Welcome back, Vincent 👋</h1>
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>19 May 2022</p>
             </div>
             <div className="flex gap-3">
-              <div className="flex items-center space-x-6 text-gray-700">
+              <div className={`flex items-center space-x-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 {/* Search Icon */}
                 <button className="hover:text-black">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
@@ -274,8 +274,8 @@ export default function KanbanBoard() {
           </div>
 
           <div className="flex gap-3 mb-6">
-            <button className="px-4 py-2 bg-slate-800 rounded-lg text-sm">Board view</button>
-            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-sm">New template</button>
+            <button className={`px-4 py-2 rounded-lg text-sm ${theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-gray-200 text-gray-900'}`}>Board view</button>
+            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-sm text-white">New template</button>
           </div>
 
           <div className="flex gap-4 overflow-x-auto pb-8">
@@ -289,7 +289,7 @@ export default function KanbanBoard() {
       {/* Add Task Modal */}
       {showAddForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-slate-900/95 backdrop-blur-sm rounded-xl p-6 w-full max-w-md border border-slate-700">
+          <div className={`${theme === 'dark' ? 'bg-slate-900/95' : 'bg-white/95'} backdrop-blur-sm rounded-xl p-6 w-full max-w-md border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}>
             <h3 className="text-xl font-semibold mb-4">Add New Task</h3>
             <div className="space-y-4">
               <div>
